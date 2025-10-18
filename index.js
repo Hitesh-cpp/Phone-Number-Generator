@@ -1,58 +1,66 @@
-const generate_btn = document.querySelector("button");
+const generate_btn = document.querySelector(".generate-btn");
 const select = document.getElementById("NumberType");
 const input = document.querySelector(".prefix");
 const output = document.querySelector("p");
-const console = document.querySelector(".console_heading")
+const consoleHeading = document.querySelector(".console_heading");
+const consoleBox = document.querySelector(".console");
+const copy_btn = document.querySelector(".copy-btn");
 
-let csvData = ""; // make it global so DownloadCSV() can access it
+let csvData = "";
+let allNumbers = ""; // make this global so copy() can use it
 
-select.addEventListener("change", function() {
-    input.value = select.value;
+select.addEventListener("change", function () {
+  input.value = select.value;
 });
 
 generate_btn.addEventListener("click", Generate);
+copy_btn.addEventListener("click", copy);
 
 function Generate() {
-    const prefix = document.querySelector(".prefix").value.trim();
-    const count = parseInt(document.querySelector(".numbers").value);
-    const digitsToGenerate = 12 - prefix.length;
-    let allNumbers = "";
-    csvData = "Phone Number\n"; // reset each time before generating
+  const prefix = input.value.trim();
+  const count = parseInt(document.querySelector(".numbers").value);
+  const digitsToGenerate = 12 - prefix.length;
+  allNumbers = ""; 
+  csvData = "Phone Number\n";
 
-    for (let j = 0; j < count; j++) {
-        let generatedSuffix = "";
-        for (let i = 0; i < digitsToGenerate; i++) {
-            const randomDigit = Math.floor(Math.random() * 10);
-            generatedSuffix += randomDigit;
-        }
-        const fullNumber = prefix + generatedSuffix;
-        allNumbers += fullNumber + "\n";
-        csvData += fullNumber + "\n";
+  consoleBox.classList.remove("hidden")
+
+  for (let j = 0; j < count; j++) {
+    let generatedSuffix = "";
+    for (let i = 0; i < digitsToGenerate; i++) {
+      const randomDigit = Math.floor(Math.random() * 10);
+      generatedSuffix += randomDigit;
     }
+    const fullNumber = prefix + generatedSuffix;
+    allNumbers += fullNumber + "\n";
+    csvData += fullNumber + "\n";
+  }
 
-    consoleHeading.innerText = "Phone Numbers"; // ✅ updated name
+  consoleHeading.innerText = "Phone Numbers";
 
-    if (count > 40) {
-        output.innerText = "📥 Numbers Generated! Download CSV";
-    } else {
-        output.innerText = allNumbers;
-    }
+  if (count > 40) {
+    output.innerText = "📥 Numbers Generated! Downloading CSV...";
+    DownloadCSV();
+  } else {
+    output.innerText = allNumbers;
+  }
 }
 
 function DownloadCSV() {
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
+  const blob = new Blob([csvData], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "pakistani_numbers.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "pakistani_numbers.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 
-    output.innerText = "✅ CSV file downloaded successfully!";
+  output.innerText = "✅ CSV file downloaded successfully!";
 }
+
 function copy() {
   if (!allNumbers) {
     alert("⚠️ No numbers to copy!");
