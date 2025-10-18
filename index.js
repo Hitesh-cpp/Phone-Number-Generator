@@ -4,7 +4,7 @@ const input = document.querySelector(".prefix");
 const output = document.querySelector("p");
 const console = document.querySelector(".console_heading")
 
-let csvData = ""; // make it global so DownloadCSV() can access it
+let csvData = ""; 
 
 select.addEventListener("change", function() {
     input.value = select.value;
@@ -17,7 +17,7 @@ function Generate() {
     const count = parseInt(document.querySelector(".numbers").value);
     const digitsToGenerate = 12 - prefix.length;
     let allNumbers = "";
-    csvData = "Phone Number\n"; // reset each time before generating
+    csvData = "Phone Number\n";
 
     for (let j = 0; j < count; j++) {
         let generatedSuffix = "";
