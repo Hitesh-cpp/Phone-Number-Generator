@@ -19,7 +19,7 @@ copy_btn.addEventListener("click", copy);
 function Generate() {
   const prefix = input.value.trim();
   const count = parseInt(document.querySelector(".numbers").value);
-  const digitsToGenerate = 12 - prefix.length;
+  const digitsToGenerate = 11 - prefix.length;
   allNumbers = ""; 
   csvData = "Phone Number\n";
 
