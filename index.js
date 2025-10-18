@@ -4,7 +4,7 @@ const input = document.querySelector(".prefix");
 const output = document.querySelector("p");
 const console = document.querySelector(".console_heading")
 
-let csvData = ""; 
+let csvData = ""; // make it global so DownloadCSV() can access it
 
 select.addEventListener("change", function() {
     input.value = select.value;
@@ -17,7 +17,7 @@ function Generate() {
     const count = parseInt(document.querySelector(".numbers").value);
     const digitsToGenerate = 12 - prefix.length;
     let allNumbers = "";
-    csvData = "Phone Number\n";
+    csvData = "Phone Number\n"; // reset each time before generating
 
     for (let j = 0; j < count; j++) {
         let generatedSuffix = "";
@@ -29,10 +29,11 @@ function Generate() {
         allNumbers += fullNumber + "\n";
         csvData += fullNumber + "\n";
     }
-        console.innerText = "Phone Numbers";
+
+    consoleHeading.innerText = "Phone Numbers"; // ✅ updated name
+
     if (count > 40) {
-        output.innerText = "📥 Numbers Generated! Downloading CSV...";
-        
+        output.innerText = "📥 Numbers Generated! Download CSV";
     } else {
         output.innerText = allNumbers;
     }
@@ -51,4 +52,17 @@ function DownloadCSV() {
     URL.revokeObjectURL(url);
 
     output.innerText = "✅ CSV file downloaded successfully!";
+}
+function copy() {
+  if (!allNumbers) {
+    alert("⚠️ No numbers to copy!");
+    return;
+  }
+
+  navigator.clipboard.writeText(allNumbers).then(() => {
+    copy_btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+    setTimeout(() => {
+      copy_btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+    }, 1500);
+  });
 }

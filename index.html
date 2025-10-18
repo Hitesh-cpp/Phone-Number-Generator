@@ -8,12 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Dangrek&family=Great+Vibes&family=Luckiest+Guy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="./index.js"defer></script>
 </head>
 <body>
     <main>
         <div class="container">
-            <h1>Enter Number</h1>
+            <h1>Number Generator</h1>
             <select name="NumberType" id="NumberType">
                 <option value="" selected>Select Operator</option>
                 <option value="033">Ufone</option>
@@ -23,11 +24,20 @@
             </select>
             <input type="text" class="prefix" placeholder="Enter Prefix">
             <input type="text" class="numbers" placeholder="Numbers to Generate">
+            <div style="display: flex; gap: 20px;">
             <button>Generate</button>
             <button onclick="DownloadCSV()">Download CSV</button>
+            </div>
+
         </div>
-        <div class="console">
-            <h1 class="console_heading"></h1>
+        <div class="console hidden">
+
+            <h1 class="console_heading" ></h1>
+            <button class="copy-btn" onclick="copy()">
+            <i class="fa-solid fa-copy"></i> Copy
+
+            </button>
+
             <p></p>
         </div>
     </main>
